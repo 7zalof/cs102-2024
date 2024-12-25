@@ -240,3 +240,16 @@ class SudokuTestCase(unittest.TestCase):
         solution = sudoku.solve(grid)
         solved = sudoku.check_solution(solution)
         self.assertTrue(solved)
+
+    def test_transpose(self):
+        given_table = [[1, 4, 7], [2, 5, 8], [3, 6, 9]]
+        expected_table = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        self.assertEqual(table, sudoku.transpose(pretable))
+
+        given_table = [[]]
+        expected_table = [[]]
+        self.assertEqual(table, sudoku.transpose(pretable))
+
+        given_table = [[0, 1], [1, 0]]
+        expected_table = [[0, 1], [1, 0]]
+        self.assertEqual(table, sudoku.transpose(pretable))
