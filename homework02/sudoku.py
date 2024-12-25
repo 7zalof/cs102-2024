@@ -248,6 +248,7 @@ def transpose(grid: tp.List[tp.List[str]]) -> tp.List[tp.List[str]]:
     """
     return [[grid[i][j] for i in range(len(grid))] for j in range(len(min(grid, key=len)))] or grid
 
+
 def run_solve(filename: str) -> None:
     grid = read_sudoku(filename)
     start = time.time()
