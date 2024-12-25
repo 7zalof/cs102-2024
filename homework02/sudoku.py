@@ -41,12 +41,8 @@ def group(values: tp.List[T], n: int) -> tp.List[tp.List[T]]:
     >>> group([1,2,3,4,5,6,7,8,9], 3)
     [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
     """
-    result: tp.List[tp.List[T]] = [list() for i in range(len(values) // n)]
 
-    for i in range(len(values)):
-        result[i // n].append(values[i])
-
-    return result
+    return [[values[j] for j in range(i * n, i * n + n)] for i in range(len(values) // n)]
 
 
 def get_row(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
@@ -218,27 +214,21 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
         ["2", "8", "7", "4", "1", "9", "6", "3", "5"],
         ["3", "4", "5", "2", "8", "6", "1", "7", "9"],
     ]
-    for i in range(r.randint(1, 10)):
-        should_reverse = r.randint(0, 1)
-        if should_reverse:
+    for _ in range(r.randint(1, 10)):
+        # should_reverse
+        if r.randint(0, 1):
             result = result[::-1]
 
-        should_shuffle_lines = (r.randint(0, 1), r.randint(0, 1), r.randint(0, 1))
-        if should_shuffle_lines[0]:
-            r.shuffle(result[:3])
-        if should_shuffle_lines[1]:
-            r.shuffle(result[3:6])
-        if should_shuffle_lines[2]:
-            r.shuffle(result[6:9])
+        # should_shuffle_lines
+        for i in range(3):
+            if r.randint(0, 1):
+                r.shuffle(result[i * 3 : i * 3 + 3])
 
-        should_shuffle_columns = (r.randint(0, 1), r.randint(0, 1), r.randint(0, 1))
+        # should_shuffle_columns
         result = transpose(result)
-        if should_shuffle_columns[0]:
-            r.shuffle(result[:3])
-        if should_shuffle_columns[1]:
-            r.shuffle(result[3:6])
-        if should_shuffle_columns[2]:
-            r.shuffle(result[6:9])
+        for i in range(3):
+            if r.randint(0, 1):
+                r.shuffle(result[i * 3 : i * 3 + 3])
         result = transpose(result)
 
     free_pos = [(i, j) for j in range(9) for i in range(9)]
